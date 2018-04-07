@@ -1,0 +1,2 @@
+debian/apparmor/usr.bin.man etc/apparmor.d
+tools/chconfig usr/share/man-db
