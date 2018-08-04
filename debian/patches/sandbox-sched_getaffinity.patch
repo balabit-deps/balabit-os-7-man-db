@@ -1,0 +1,26 @@
+From: Colin Watson <cjwatson@debian.org>
+Subject: sandbox: Allow sched_getaffinity
+
+This is used by xz-utils >= 5.2.3 if the --threads=0 option is in use
+(perhaps via XZ_DEFAULTS or XZ_OPT).
+
+Reported by Axel Rohde.
+
+* lib/sandbox.c (make_seccomp_filter): Allow sched_getaffinity.
+
+Origin: upstream, https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8fa6fb5eca612600b3a3d8da811f8345afec102e
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/man-db/+bug/1785414
+Last-Update: 2018-08-04
+
+Index: b/lib/sandbox.c
+===================================================================
+--- a/lib/sandbox.c
++++ b/lib/sandbox.c
+@@ -497,6 +497,7 @@
+ 	SC_ALLOW ("madvise");
+ 	SC_ALLOW ("mprotect");
+ 	SC_ALLOW ("mremap");
++	SC_ALLOW ("sched_getaffinity");
+ 	SC_ALLOW ("sync_file_range2");
+ 	SC_ALLOW ("sysinfo");
+ 	SC_ALLOW ("uname");

@@ -1,0 +1,26 @@
+From: Colin Watson <cjwatson@debian.org>
+Subject: sandbox: Improve ESET compatibility further
+
+* lib/sandbox.c (make_seccomp_filter): If libesets_pac.so is preloaded,
+then allow msgset (second argument 0) and msgsnd.
+
+Origin: upstream, https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=7582fb9d69a126a53ee11223b12346d38c0f333a
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/man-db/+bug/1785414
+Last-Update: 2018-08-04
+
+Index: b/lib/sandbox.c
+===================================================================
+--- a/lib/sandbox.c
++++ b/lib/sandbox.c
+@@ -536,6 +536,11 @@
+ 		SC_ALLOW ("setsockopt");
+ 		SC_ALLOW_ARG_1 ("socket", SCMP_A0 (SCMP_CMP_EQ, AF_UNIX));
+ 	}
++	/* ESET sends messages to a System V message queue. */
++	if (search_ld_preload ("libesets_pac.so")) {
++		SC_ALLOW_ARG_1 ("msgget", SCMP_A1 (SCMP_CMP_EQ, 0));
++		SC_ALLOW ("msgsnd");
++	}
+ 
+ 	return ctx;
+ }

@@ -1,3 +1,13 @@
+man-db (2.8.3-2ubuntu0.1) bionic; urgency=medium
+
+  * Backport seccomp sandbox improvements from 2.8.4 (LP: #1785414):
+    - Allow sched_getaffinity, used by xz in some cases.
+    - Allow some shared memory operations, required by preloaded libraries
+      such as the Astrill VPN.
+    - Improve ESET File Security compatibility further.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sat, 04 Aug 2018 20:16:12 +0100
+
 man-db (2.8.3-2) unstable; urgency=medium
 
   * AppArmor: Allow man_filter to read from anywhere, since there are no
